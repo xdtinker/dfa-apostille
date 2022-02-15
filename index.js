@@ -32,8 +32,8 @@ async function main() {
                 await page.click('#show-document-owner')
 
                 await page.waitForTimeout(1000)
-                await page.locator('#site').selectOption({ 'index': 0 })
-                await page.locator('#stepSelectProcessingSiteNextBtn').click()
+                await page.selectOption('#site', { 'index': 0 })
+                await page.click('#stepSelectProcessingSiteNextBtn')
 
 
                 //Document owner   
