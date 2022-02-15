@@ -10,7 +10,10 @@ const { send_log, send_notif } = require('./telegram.js');
     const page = await context.newPage()
     try {
         isTrue = true
+        exit_condition = 0
         while (isTrue) {
+            if (exit_condition >= 50) break
+            exit_condition += 1
             await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
 
             await page.waitForTimeout(1000)
