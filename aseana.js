@@ -70,8 +70,8 @@ const { send_log, send_notif } = require('./telegram.js');
         await page.screenshot({ path: 'screenshot-err.png', fullPage: true });
         send_notif(error, ' ERROR ')
     } finally {
-
         await context.close()
         await browser.close()
+        process.exit(0)
     }
 })()
