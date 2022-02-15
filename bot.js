@@ -1,4 +1,4 @@
-const { chromium } = require('playwright-firefox');
+const { chromium } = require('playwright');
 const { send_log, send_notif } = require('./telegram.js');
 
 (async() => {
