@@ -4,7 +4,7 @@ const { send_log, send_notif } = require('./telegram.js');
 
 (async() => {
     const browser = await chromium.launch({
-        headless: false
+        headless: true
     })
     const context = await browser.newContext()
 
