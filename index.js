@@ -17,7 +17,7 @@ const { send_log, send_notif } = require('./telegram.js');
                 await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
 
                 await page.waitForTimeout(1000)
-                await page.click('#announcement >> text=Close')
+                await page.click('text=Close')
 
                 await page.locator('#Email').fill('aziz.saricula@gmail.com')
                 await page.locator('#Password').fill('Anon123s.')
