@@ -1,20 +1,19 @@
 const { chromium } = require('playwright');
 const { send_log, send_notif } = require('./telegram.js');
 
-isTrue = true
-async function main() {
-    (async() => {
-        const browser = await chromium.launch({
-            headless: true
-        })
-        const context = await browser.newContext()
 
-        const page = await context.newPage()
-        try {
-            exit_condition = 0
-            while (isTrue) {
-                if (exit_condition >= 50) throw Error("Time limit Exceeded, Dyno will restart \nUse /start command to restart task")
-                exit_condition += 1
+(async() => {
+    const browser = await chromium.launch({
+        headless: true
+    })
+    const context = await browser.newContext()
+
+    const page = await context.newPage()
+    try {
+        isTrue = true
+        arr = [0, 1, 4]
+        while (isTrue) {
+            for await (const i of arr) {
                 await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
 
                 await page.waitForTimeout(1000)
@@ -31,9 +30,10 @@ async function main() {
                 await page.waitForTimeout(1000)
                 await page.click('#show-document-owner')
 
-                await page.waitForTimeout(1000)
-                await page.selectOption('#site', { 'index': 0 })
-                await page.click('#stepSelectProcessingSiteNextBtn')
+                await page.waitForTimeout(1000);
+                //0, 1, 4
+                await page.locator('#site').selectOption({ 'index': i })
+                await page.locator('#stepSelectProcessingSiteNextBtn').click()
 
 
                 //Document owner   
@@ -53,31 +53,26 @@ async function main() {
 
 
                 const available_date = await page.$$('div[class="fc-content"]');
-
+                var branch_name = await page.$eval("#siteAndNameAddress", bname => bname.textContent)
                 for await (const dates of available_date) {
                     if (await dates.innerText() == 'Not Available') {
                         // console.log(await dates.innerText());
-                        console.log('NO APPOINTMENT FOUND IN ASEANA')
+                        console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
                     } else {
-                        send_notif('APPOINTMENT FOUND IN IN ASEANA')
+                        send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                         isTrue = false
                         break
                     }
                 }
                 await page.click('.float-right')
             }
-        } catch (e) {
-            console.log(e);
-            send_notif(e.message)
-        } finally {
-            await context.close()
-            await browser.close()
         }
-    })()
-}
-
-function stop() {
-    isTrue = false
-}
-
-module.exports = { stop, main }
+    } catch (e) {
+        console.log(e);
+        send_notif(e)
+    } finally {
+        await context.close()
+        await browser.close()
+        send_notif('task ended')
+    }
+})()
