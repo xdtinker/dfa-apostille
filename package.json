@@ -2,9 +2,9 @@
   "name": "apostille",
   "version": "1.0.0",
   "description": "ASEANA Apostille appointment checker",
-  "main": "bot.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node --optimize_for_size --max_old_space_size=460 bot.js",
+    "start": "node --optimize_for_size --max_old_space_size=460 index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
