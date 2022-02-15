@@ -4,7 +4,7 @@ const { send_log, send_notif } = require('./telegram.js');
 
 (async() => {
     const browser = await chromium.launch({
-        headless: true
+        headless: false
     })
     const context = await browser.newContext()
 
@@ -32,12 +32,12 @@ const { send_log, send_notif } = require('./telegram.js');
 
                 await page.waitForTimeout(1000);
                 //0, 1, 4
-                await page.locator('#site').selectOption({ 'index': i })
-                await page.locator('#stepSelectProcessingSiteNextBtn').click()
+                await page.selectOption('#site', { 'index': i })
+                await page.click('text=Next')
 
 
                 //Document owner   
-                await page.locator(`#Record_FirstName`).fill('Datu Abdulaziz')
+                await page.locator('#Record_FirstName').fill('Datu Abdulaziz')
                 await page.locator('#Record_MiddleName').fill('Matabalao')
                 await page.locator('#Record_LastName').fill('Saricula')
                 await page.locator('#Record_DateOfBirth').fill('2000-02-25') // birthdate format (yyyy-mm-dd)
