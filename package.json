@@ -2,7 +2,7 @@
   "name": "apostille",
   "version": "1.0.0",
   "description": "Apostille appointment checker",
-  "main": "app.js",
+  "main": "aseana.js",
   "scripts": {
     "start": "node --optimize_for_size --max_old_space_size=460 aseana.js",
     "test": "echo \"Error: no test specified\" && exit 1"
