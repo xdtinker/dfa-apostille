@@ -1,7 +1,7 @@
 const { chromium } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
-
+isTrue = true
 async function main() {
     (async() => {
         const browser = await chromium.launch({
@@ -11,7 +11,6 @@ async function main() {
 
         const page = await context.newPage()
         try {
-            isTrue = true
             exit_condition = 0
             while (isTrue) {
                 if (exit_condition >= 50) throw Error("Time limit Exceeded, Dyno will restart \nUse /start command to restart task")
@@ -77,4 +76,8 @@ async function main() {
     })()
 }
 
-module.exports = { main }
+function stop() {
+    isTrue = false
+}
+
+module.exports = { stop, main }
