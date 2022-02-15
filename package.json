@@ -1,0 +1,22 @@
+{
+  "name": "apostille",
+  "version": "1.0.0",
+  "description": "Apostille appointment checker",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "checker",
+    "dfa",
+    "apostille"
+  ],
+  "author": "Aziz",
+  "license": "ISC",
+  "dependencies": {
+    "cross-fetch": "^3.1.5",
+    "dotenv": "^16.0.0",
+    "node-telegram-bot-api": "^0.56.0",
+    "playwright-firefox": "^1.19.0"
+  }
+}
