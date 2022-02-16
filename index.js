@@ -19,10 +19,12 @@ const device = devices['iPad (gen 7)'];
         arr = [0, 1, 4]
         while (isTrue) {
             for await (const i of arr) {
-                await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
+                await page.goto('https://co.dfaapostille.ph/appointment/Account/Login')
 
                 await page.waitForTimeout(1000)
-                await page.locator('data-dismiss="modal" >> nth=1').click()
+                await page.$('#announcement >> visible=true')
+
+                await page.click('[data-dismiss="modal"] >> nth=1')
 
                 await page.locator('#Email').fill('aziz.saricula@gmail.com')
                 await page.locator('#Password').fill('Anon123s.')
