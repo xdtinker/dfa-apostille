@@ -22,7 +22,7 @@ const device = devices['iPad (gen 7)'];
                 await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
 
                 await page.waitForTimeout(1000)
-                await page.locator('[data-dismiss="modal"] >> nth=1').click()
+                await page.locator('data-dismiss="modal" >> nth=1').click()
 
                 await page.locator('#Email').fill('aziz.saricula@gmail.com')
                 await page.locator('#Password').fill('Anon123s.')
