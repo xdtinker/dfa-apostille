@@ -1,18 +1,18 @@
-const { firefox } = require('playwright-firefox');
+const { chromium } = require('playwright');
 const { send_log, send_notif } = require('./telegram.js');
 
+isTrue = true
+arr = [0, 1, 4]
+while (isTrue) {
+    (async() => {
+        const browser = await chromium.launch({
+            headless: true
+        })
+        const context = await browser.newContext()
 
-(async() => {
-    const browser = await firefox.launch({
-        headless: true
-    })
-    const context = await browser.newContext()
+        const page = await context.newPage()
+        try {
 
-    const page = await context.newPage()
-    try {
-        isTrue = true
-        arr = [0, 1, 4]
-        while (isTrue) {
             for await (const i of arr) {
                 await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
 
@@ -27,12 +27,12 @@ const { send_log, send_notif } = require('./telegram.js');
                 await page.click('#terms-and-conditions-agree')
 
                 //Home page
-                await page.waitForTimeout(1000)
+                // await page.waitForTimeout(1000)
                 await page.click('#show-document-owner')
 
-                await page.waitForTimeout(1000);
+                // await page.waitForTimeout(1000);
                 //0, 1, 4
-                await page.selectOption('[name="Record.ProcessingSite"]', { 'index': i })
+                await page.selectOption('#site', { 'index': i })
                 await page.click('#stepSelectProcessingSiteNextBtn')
 
 
@@ -66,13 +66,13 @@ const { send_log, send_notif } = require('./telegram.js');
                 }
                 await page.click('.float-right')
             }
+        } catch (e) {
+            console.log(e);
+            send_notif(e)
+        } finally {
+            await context.close()
+            await browser.close()
+            send_notif('task ended')
         }
-    } catch (e) {
-        console.log(e);
-        send_notif(e)
-    } finally {
-        await context.close()
-        await browser.close()
-        send_notif('task ended')
-    }
-})()
+    })()
+}
