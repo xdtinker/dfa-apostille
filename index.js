@@ -1,18 +1,23 @@
-const { chromium } = require('playwright-firefox');
+const { firefox, devices } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
+const device = devices['iPad (gen 7)'];
 
-isTrue = true
-arr = [0, 1, 4]
-while (isTrue) {
-    (async() => {
-        const browser = await chromium.launch({
-            headless: true
-        })
-        const context = await browser.newContext()
+(async() => {
+    const browser = await firefox.launch({
+        headless: true
+    })
+    const context = await browser.newContext({
+        locale: 'en-PH',
+        timezoneId: 'Asia/Manila',
+        viewport: device.viewport,
+        userAgent: device.userAgent,
+    })
 
-        const page = await context.newPage()
-        try {
-
+    const page = await context.newPage()
+    try {
+        isTrue = true
+        arr = [0, 1, 4]
+        while (isTrue) {
             for await (const i of arr) {
                 await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
 
@@ -66,13 +71,13 @@ while (isTrue) {
                 }
                 await page.click('.float-right')
             }
-        } catch (e) {
-            console.log(e);
-            send_notif(e)
-        } finally {
-            await context.close()
-            await browser.close()
-            send_notif('task ended')
         }
-    })()
-}
+    } catch (e) {
+        console.log(e);
+        send_notif(e)
+    } finally {
+        await context.close()
+        await browser.close()
+        send_notif('task ended')
+    }
+})()
