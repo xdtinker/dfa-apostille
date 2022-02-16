@@ -17,7 +17,7 @@ const { send_log, send_notif } = require('./telegram.js');
                 await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' })
 
                 await page.waitForTimeout(1000)
-                await page.click('text=Close')
+                await page.locator('[data-dismiss="modal"] >> nth=1').click()
 
                 await page.locator('#Email').fill('aziz.saricula@gmail.com')
                 await page.locator('#Password').fill('Anon123s.')
@@ -33,7 +33,7 @@ const { send_log, send_notif } = require('./telegram.js');
                 await page.waitForTimeout(1000);
                 //0, 1, 4
                 await page.selectOption('#site', { 'index': i })
-                await page.click('text=Next')
+                await page.click('#stepSelectProcessingSiteNextBtn')
 
 
                 //Document owner   
