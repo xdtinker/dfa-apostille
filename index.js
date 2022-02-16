@@ -32,7 +32,7 @@ const { send_log, send_notif } = require('./telegram.js');
 
                 await page.waitForTimeout(1000);
                 //0, 1, 4
-                await page.selectOption('#site', { 'index': i })
+                await page.selectOption('[name="Record.ProcessingSite"]', { 'index': i })
                 await page.click('#stepSelectProcessingSiteNextBtn')
 
 
