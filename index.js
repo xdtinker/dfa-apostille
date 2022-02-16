@@ -1,9 +1,9 @@
-const { chromium, devices } = require('playwright');
+const { firefox, devices } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 const device = devices['iPad Pro 11'];
 
 (async() => {
-    const browser = await chromium.launch({
+    const browser = await firefox.launch({
         headless: true
     })
     const context = await browser.newContext({
