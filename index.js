@@ -1,9 +1,9 @@
-const { firefox, devices } = require('playwright-firefox');
+const { chromium, devices } = require('playwright');
 const { send_log, send_notif } = require('./telegram.js');
-const device = devices['iPad (gen 7)'];
+const device = devices['iPad Pro 11'];
 
 (async() => {
-    const browser = await firefox.launch({
+    const browser = await chromium.launch({
         headless: true
     })
     const context = await browser.newContext({
@@ -19,10 +19,11 @@ const device = devices['iPad (gen 7)'];
         arr = [0, 1, 4]
         while (isTrue) {
             for await (const i of arr) {
-                await page.goto('https://co.dfaapostille.ph/appointment/Account/Login')
+                await page.goto('https://co.dfaapostille.ph/dfa/')
 
                 await page.waitForTimeout(1000)
-                await page.$('#announcement >> visible=true')
+
+                await page.click('text=SCHEDULE AN APPOINTMENT')
 
                 await page.click('[data-dismiss="modal"] >> nth=1')
 
