@@ -1,9 +1,9 @@
-const { chromium } = require('playwright');
+const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
 
 (async() => {
-    const browser = await chromium.launch({
+    const browser = await firefox.launch({
         headless: true
     })
     const context = await browser.newContext()
