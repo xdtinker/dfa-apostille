@@ -69,9 +69,9 @@ async function main() {
                     for await (const dates of available_date) {
                         if (await dates.innerText() == 'Not Available') {
                             // console.log(await dates.innerText());
-                            console.log(BAD, `NO APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
                         } else {
-                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                                 //throw Error('Task ended\nReason: Appointment found')
                         }
