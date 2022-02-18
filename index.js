@@ -31,12 +31,11 @@ async function main() {
 
             //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
             await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
+            await page.setViewportSize({ width: 2048, height: 1004 })
 
-            await page.waitForTimeout(1000)
+            await page.click('.row > .col-sm-3 > center > .btn > .far')
 
-            await page.click('text=SCHEDULE AN APPOINTMENT')
-
-            await page.click('button[data-dismiss="modal"] >> nth=1')
+            await page.click('b > .container > .row > .col-md-6 > .btn')
 
             await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
             await page.locator('#Password').fill('Anon123s.')
