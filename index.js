@@ -27,13 +27,13 @@ async function main() {
                 }
                 //console.log(countdown);
             }, 1000);
-            await page.waitForTimeout(1000)
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
-            // await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
+
+            //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+            await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
 
             await page.waitForTimeout(1000)
 
-            // await page.click('text=SCHEDULE AN APPOINTMENT')
+            await page.click('text=SCHEDULE AN APPOINTMENT')
 
             await page.click('button[data-dismiss="modal"] >> nth=1')
 
@@ -51,10 +51,7 @@ async function main() {
             await page.waitForTimeout(1000);
             isTrue = true
             let arr = [0, 1, 4]
-            let kill_count = 0
             while (isTrue) {
-                kill_count += 2
-                if (kill_count >= 3000) throw Error("Time limit Exceeded, Dyno will restart \nUse /start command to restart task")
                 for await (const i of arr) {
                     await page.selectOption('#site', { 'index': i })
                     await page.click('#stepSelectProcessingSiteNextBtn')
