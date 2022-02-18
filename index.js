@@ -35,7 +35,7 @@ async function main() {
 
             await page.click('.row > .col-sm-3 > center > .btn > .far')
 
-            await page.click('b > .container > .row > .col-md-6 > .btn')
+            await page.click('button[data-dismiss="modal"] >> nth=1')
 
             await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
             await page.locator('#Password').fill('Anon123s.')
