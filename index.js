@@ -1,24 +1,6 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
-// var OK = '\x1b[33m%s\x1b[0m';
-// var BAD = '\x1b[31m%s\x1b[0m';
-
-
-function timer_exit() {
-    var countdown = 1 * 60 * 1000;
-    var timerId = setInterval(function() {
-        countdown -= 1000;
-        var min = Math.floor(countdown / (60 * 1000));
-        var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
-        if (countdown <= 0) {
-            console.log(`Checker has reached it's time limit, app will automatically restart`)
-            send_notif(`Checker has reached it's time limit, app will automatically restart`)
-            clearInterval(timerId)
-            process.exit(0)
-        }
-    }, 1000);
-}
 
 
 async function main() {
@@ -55,7 +37,10 @@ async function main() {
             await page.waitForTimeout(1000);
             isTrue = true
             let arr = [0, 1, 4]
+            let kill_count = 0
             while (isTrue) {
+                kill_count += 2
+                if (kill_count >= 3000) throw Error("Time limit Exceeded, Dyno will restart \nUse /start command to restart task")
                 for await (const i of arr) {
                     await page.selectOption('#site', { 'index': i })
                     await page.click('#stepSelectProcessingSiteNextBtn')
@@ -84,9 +69,9 @@ async function main() {
                     for await (const dates of available_date) {
                         if (await dates.innerText() == 'Not Available') {
                             // console.log(await dates.innerText());
-                            console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(BAD, `NO APPOINTMENT FOUND IN ${branch_name}`)
                         } else {
-                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                                 //throw Error('Task ended\nReason: Appointment found')
                         }
@@ -102,11 +87,11 @@ async function main() {
         } finally {
             await context.close()
             await browser.close()
+            process.exit(0)
         }
     })()
 }
 
 if (require.main === module) {
-    timer_exit()
-    main()
+    main();
 }
