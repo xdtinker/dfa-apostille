@@ -7,6 +7,7 @@ const { send_log, send_notif } = require('./telegram.js');
 
 async function main() {
     console.log('App is running');
+    send_log('App is running');
     (async() => {
         const browser = await firefox.launch({
             headless: true
