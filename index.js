@@ -4,18 +4,18 @@ const { send_log, send_notif } = require('./telegram.js');
 // var OK = '\x1b[33m%s\x1b[0m';
 // var BAD = '\x1b[31m%s\x1b[0m';
 
-var countdown = 60 * 60 * 1000;
-var timerId = setInterval(function() {
-    countdown -= 1000;
-    var min = Math.floor(countdown / (60 * 1000));
-    var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
-    if (countdown <= 0) {
-        console.log(`Checker has reached it's time limit, app will automatically restart`)
-        send_notif(`Checker has reached it's time limit, app will automatically restart`)
-        clearInterval(timerId)
-        process.exit(0)
-    }
-}, 1000);
+// var countdown = 60 * 60 * 1000;
+// var timerId = setInterval(function() {
+//     countdown -= 1000;
+//     var min = Math.floor(countdown / (60 * 1000));
+//     var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
+//     if (countdown <= 0) {
+//         console.log(`Checker has reached it's time limit, app will automatically restart`)
+//         send_notif(`Checker has reached it's time limit, app will automatically restart`)
+//         clearInterval(timerId)
+//         process.exit(0)
+//     }
+// }, 1000);
 
 async function main() {
     (async() => {
