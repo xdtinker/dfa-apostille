@@ -6,7 +6,7 @@ const { send_log, send_notif } = require('./telegram.js');
 
 
 function timer_exit() {
-    var countdown = .5 * 60 * 1000;
+    var countdown = 1 * 60 * 1000;
     var timerId = setInterval(function() {
         countdown -= 1000;
         var min = Math.floor(countdown / (60 * 1000));
