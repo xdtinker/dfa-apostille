@@ -5,7 +5,7 @@ const { send_log, send_notif } = require('./telegram.js');
 async function main() {
     (async() => {
         const browser = await firefox.launch({
-            headless: false
+            headless: true
         })
         const context = await browser.newContext()
 
