@@ -4,7 +4,7 @@ const { send_log, send_notif } = require('./telegram.js');
 // var OK = '\x1b[33m%s\x1b[0m';
 // var BAD = '\x1b[31m%s\x1b[0m';
 
-var countdown = .5 * 60 * 1000;
+var countdown = 60 * 60 * 1000;
 var timerId = setInterval(function() {
     countdown -= 1000;
     var min = Math.floor(countdown / (60 * 1000));
@@ -20,7 +20,7 @@ var timerId = setInterval(function() {
 async function main() {
     (async() => {
         const browser = await firefox.launch({
-            headless: false
+            headless: true
         })
         const context = await browser.newContext()
 
@@ -107,5 +107,6 @@ async function main() {
 }
 
 if (require.main === module) {
+    console.log('App is running');
     main();
 }
