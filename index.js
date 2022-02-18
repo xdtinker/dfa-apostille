@@ -4,20 +4,25 @@ const { send_log, send_notif } = require('./telegram.js');
 // var OK = '\x1b[33m%s\x1b[0m';
 // var BAD = '\x1b[31m%s\x1b[0m';
 
-// var countdown = 60 * 60 * 1000;
-// var timerId = setInterval(function() {
-//     countdown -= 1000;
-//     var min = Math.floor(countdown / (60 * 1000));
-//     var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
-//     if (countdown <= 0) {
-//         console.log(`Checker has reached it's time limit, app will automatically restart`)
-//         send_notif(`Checker has reached it's time limit, app will automatically restart`)
-//         clearInterval(timerId)
-//         process.exit(0)
-//     }
-// }, 1000);
+
+function timer() {
+    var countdown = .5 * 60 * 1000;
+    var timerId = setInterval(function() {
+        countdown -= 1000;
+        var min = Math.floor(countdown / (60 * 1000));
+        var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
+        if (countdown <= 0) {
+            console.log(`Checker has reached it's time limit, app will automatically restart`)
+            send_notif(`Checker has reached it's time limit, app will automatically restart`)
+            clearInterval(timerId)
+            process.exit(0)
+        }
+    }, 1000);
+}
+
 
 async function main() {
+    console.log('App is running');
     (async() => {
         const browser = await firefox.launch({
             headless: true
@@ -50,12 +55,8 @@ async function main() {
             await page.waitForTimeout(1000);
             isTrue = true
             let arr = [0, 1, 4]
-            let kill_count = 0
             while (isTrue) {
                 for await (const i of arr) {
-                    kill_count += .5
-                    if (kill_count >= 3000) throw Error("Time limit Exceeded, Dyno will restart \nUse /start command to restart task")
-
                     await page.selectOption('#site', { 'index': i })
                     await page.click('#stepSelectProcessingSiteNextBtn')
 
@@ -107,6 +108,6 @@ async function main() {
 }
 
 if (require.main === module) {
-    console.log('App is running');
+    timer()
     main();
 }
