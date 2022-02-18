@@ -29,11 +29,11 @@ async function main() {
                 //console.log(countdown);
             }, 1000);
 
-            //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
-            await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
+            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+            //await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
             await page.setViewportSize({ width: 2048, height: 1004 })
 
-            await page.click('.row > .col-sm-3 > center > .btn > .far')
+            //
 
             await page.click('button[data-dismiss="modal"] >> nth=1')
 
