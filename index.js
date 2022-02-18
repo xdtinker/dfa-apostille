@@ -5,7 +5,7 @@ const { send_log, send_notif } = require('./telegram.js');
 // var BAD = '\x1b[31m%s\x1b[0m';
 
 
-function timer() {
+function timer_exit() {
     var countdown = .5 * 60 * 1000;
     var timerId = setInterval(function() {
         countdown -= 1000;
@@ -108,6 +108,6 @@ async function main() {
 }
 
 if (require.main === module) {
-    timer()
-    main();
+    timer_exit()
+    main()
 }
