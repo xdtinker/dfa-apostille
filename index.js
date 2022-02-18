@@ -1,9 +1,6 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
-var OK = '\x1b[33m%s\x1b[0m';
-var BAD = '\x1b[31m%s\x1b[0m';
-
 const args = [
     '--no-sandbox',
     '--disable-setuid-sandbox',
@@ -27,22 +24,21 @@ async function main() {
 
         const page = await context.newPage()
         try {
-            var countdown = 60 * 60 * 1000;
+            var countdown = 50 * 60 * 1000;
             var timerId = setInterval(function() {
                 countdown -= 1000;
                 var min = Math.floor(countdown / (60 * 1000));
                 var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
                 if (countdown <= 0) {
                     clearInterval(timerId)
-                    send_notif(`Checker has reached it's time limit, app will automatically restart`)
-                    throw Error(`Checker has reached it's time limit, app will automatically restart`)
+                    send_notif(`Time limit exceeded, app will automatically restart __Apostille`)
+                    throw Error(`Time limit exceeded, app will automatically restart`)
                 }
             }, 1000);
 
             await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
             // await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
 
-            await page.waitForTimeout(1000)
 
             // await page.click('text=SCHEDULE AN APPOINTMENT')
 
@@ -60,9 +56,8 @@ async function main() {
             await page.click('text=DOCUMENT OWNER')
 
             await page.waitForTimeout(1000);
-            isTrue = true
             let arr = [0, 1, 4]
-            while (isTrue) {
+            while (true) {
                 for await (const i of arr) {
                     await page.selectOption('#site', { 'index': i })
                     await page.click('#stepSelectProcessingSiteNextBtn')
@@ -89,9 +84,9 @@ async function main() {
                     var branch_name = await page.$eval("#siteAndNameAddress", branchname => branchname.textContent)
                     for await (const dates of available_date) {
                         if (await dates.innerText() == 'Not Available') {
-                            console.log(BAD, `NO APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
                         } else {
-                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
 
                         }
