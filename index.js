@@ -25,10 +25,10 @@ async function main() {
                     send_notif(`Checker has reached it's time limit, app will automatically restart`)
                     throw Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
-                console.log(countdown);
+                //console.log(countdown);
             }, 1000);
-
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
+            await page.waitForTimeout(1000)
+            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
             // await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
 
             await page.waitForTimeout(1000)
