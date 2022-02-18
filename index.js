@@ -1,16 +1,27 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
-// var OK = '\x1b[33m%s\x1b[0m';
-// var BAD = '\x1b[31m%s\x1b[0m';
+var OK = '\x1b[33m%s\x1b[0m';
+var BAD = '\x1b[31m%s\x1b[0m';
 
+const args = [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-infobars',
+    '--window-position=0,0',
+    '--ignore-certifcate-errors',
+    '--ignore-certifcate-errors-spki-list',
+    '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'
+];
 
 async function main() {
     console.log('App is running');
-    send_log('App is running');
     (async() => {
         const browser = await firefox.launch({
-            headless: true
+            headless: true,
+            ignoreHTTPSErrors: true,
+            args: args,
+            ignoreDefaultArgs: ['--enable-automation']
         })
         const context = await browser.newContext()
 
@@ -26,14 +37,14 @@ async function main() {
                     send_notif(`Checker has reached it's time limit, app will automatically restart`)
                     throw Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
-                //console.log(countdown);
             }, 1000);
 
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
-            //await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
-            await page.setViewportSize({ width: 2048, height: 1004 })
+            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
+            // await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
 
-            //
+            await page.waitForTimeout(1000)
+
+            // await page.click('text=SCHEDULE AN APPOINTMENT')
 
             await page.click('button[data-dismiss="modal"] >> nth=1')
 
@@ -75,19 +86,16 @@ async function main() {
                     await page.waitForTimeout(1000)
 
                     const available_date = await page.$$('span[class="fc-title"]');
-                    // const day = await page.$$('span[class="fc-day-number"]');
                     var branch_name = await page.$eval("#siteAndNameAddress", branchname => branchname.textContent)
                     for await (const dates of available_date) {
                         if (await dates.innerText() == 'Not Available') {
-                            // console.log(await dates.innerText());
-                            console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(BAD, `NO APPOINTMENT FOUND IN ${branch_name}`)
                         } else {
-                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
-                                //throw Error('Task ended\nReason: Appointment found')
+
                         }
                     }
-                    // await page.click('.float-right')
                     await page.click('#backToStepOne')
                     await page.click('#stepOneBackBtn')
                 }
