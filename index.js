@@ -1,6 +1,8 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
+// var OK = '\x1b[33m%s\x1b[0m';
+// var BAD = '\x1b[31m%s\x1b[0m';
 
 
 async function main() {
@@ -13,6 +15,18 @@ async function main() {
 
         const page = await context.newPage()
         try {
+            var countdown = .1 * 60 * 1000;
+            var timerId = setInterval(function() {
+                countdown -= 1000;
+                var min = Math.floor(countdown / (60 * 1000));
+                var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
+                if (countdown <= 0) {
+                    clearInterval(timerId)
+                    send_notif(`Checker has reached it's time limit, app will automatically restart`)
+                    throw Error(`Checker has reached it's time limit, app will automatically restart`)
+                }
+                console.log(countdown);
+            }, 1000);
 
             await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
             // await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
