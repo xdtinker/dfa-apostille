@@ -36,16 +36,17 @@ async function main() {
                 }
             }, 1000);
 
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
-            // await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
-
+            await page.goto('https://co.dfaapostille.ph/dfa', { waitUntil: 'domcontentloaded' })
+            await page.waitForTimeout(2000)
+            await page.waitForSelector('div[class="row"]')
+            await page.click('a:has-text("SCHEDULE AN APPOINTMENT")')
             await page.waitForSelector('#announcement')
             await page.click('div[class="container"] button:has-text("Close")')
-            
+
             await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
             await page.locator('#Password').fill('Anon123s.')
 
-            await page.click('text=LOGIN')
+            await page.click('button:has-text("LOGIN")')
             await page.click('#declaration-agree')
             await page.click('#terms-and-conditions-agree')
 
