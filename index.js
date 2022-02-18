@@ -79,18 +79,19 @@ async function main() {
                     await page.waitForTimeout(1000)
 
                     const available_date = await page.$$('span[class="fc-title"]');
-                    var branch_name = await page.$eval("#siteAndNameAddress", branchname => branchname.textContent)
-                    for await (const dates of available_date) {
-                        if (await dates.innerText() == 'Not Available') {
-                            console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
-                        } else {
-                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
-                            send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
+                    var branch_name = await page.$eval("#siteAndNameAddress", branchname => branchname.textContent);
 
+                    available_date.forEach(async dates => {
+                        if (await dates.innerText() == 'Not Available') {
+                            console.log(BAD, `NO APPOINTMENT FOUND IN ${branch_name}`)
+                        } else {
+                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
+                            send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                         }
-                    }
-                    await page.click('#backToStepOne')
-                    await page.click('#stepOneBackBtn')
+                    });
+
+                    await page.click('#backToStepOne');
+                    await page.click('#stepOneBackBtn');
                 }
             }
         } catch (e) {
