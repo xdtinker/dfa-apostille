@@ -1,25 +1,26 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
+// var OK = '\x1b[33m%s\x1b[0m';
+// var BAD = '\x1b[31m%s\x1b[0m';
 
-var countdown = 60 * 60 * 1000;
+var countdown = .5 * 60 * 1000;
 var timerId = setInterval(function() {
     countdown -= 1000;
     var min = Math.floor(countdown / (60 * 1000));
     var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
-    console.log(countdown)
     if (countdown <= 0) {
-        console.log('Timer reached')
+        console.log(`Checker has reached it's time limit, app will automatically restart`)
+        send_notif(`Checker has reached it's time limit, app will automatically restart`)
         clearInterval(timerId)
         process.exit(0)
     }
-
-}, 1000); //1000ms. = 1sec.
+}, 1000);
 
 async function main() {
     (async() => {
         const browser = await firefox.launch({
-            headless: true
+            headless: false
         })
         const context = await browser.newContext()
 
