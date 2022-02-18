@@ -83,9 +83,9 @@ async function main() {
 
                     available_date.forEach(async dates => {
                         if (await dates.innerText() == 'Not Available') {
-                            console.log(BAD, `NO APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
                         } else {
-                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                         }
                     });
