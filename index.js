@@ -18,7 +18,7 @@ var timerId = setInterval(function() {
 
 async function main() {
     (async() => {
-        const browser = await chromium.launch({
+        const browser = await firefox.launch({
             headless: true
         })
         const context = await browser.newContext()
