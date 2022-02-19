@@ -79,21 +79,25 @@ async function main() {
                     await page.locator('#Record_CountryDestination').selectOption({ 'value': 'Kuwait (KWT)' })
 
                     await page.locator('#documentsSelectionBtn').click()
-                    //await page.waitForTimeout(1000);
+                    while (true) {
+                        if (await page.isVisible('#nbiClearance')) break
+                    }
                     await page.locator('#nbiClearance').check()
                     await page.locator('#qtyNbiClearanceRegular').fill('1')
                     await page.locator('#selectDocumentsBtn').click()
 
                     await page.locator('#stepOneNextBtn').click()
 
-                    await page.waitForTimeout(1000)
+                    while (true) {
+                        if (await page.isVisible('#siteAndNameAddress')) break
+                    }
 
                     const available_date = await page.$$('span[class="fc-title"]');
                     var branch_name = await page.$eval("#siteAndNameAddress", branchname => branchname.textContent);
 
                     available_date.forEach(async dates => {
-                        if (await dates.innerText() == 'Not Available') {
-                            console.log(`NO APPOINTMENT FOUND IN ${branch_name}`)
+                        if (await dates.innerText() === 'Not Available') {
+                            console.log(`${await dates.innerText()} in ${branch_name}`)
                         } else {
                             console.log(`APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
