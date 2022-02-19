@@ -119,6 +119,5 @@ async function main() {
 }
 
 if (require.main === module) {
-    send_log("Apostille: APP Initializing");
     main();
 }
