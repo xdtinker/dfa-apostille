@@ -12,7 +12,7 @@ const args = [
 ];
 
 async function main() {
-    console.log('App is running');
+    console.log('App is running!');
     (async() => {
         const browser = await firefox.launch({
             headless: true,
@@ -24,7 +24,7 @@ async function main() {
 
         const page = await context.newPage()
         try {
-            var countdown = 30 * 60 * 1000;
+            var countdown = 20 * 60 * 1000;
             var timerId = setInterval(function() {
                 countdown -= 1000;
                 var min = Math.floor(countdown / (60 * 1000));
