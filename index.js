@@ -1,6 +1,6 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
-send_log("APP START");
+
 const args = [
     '--no-sandbox',
     '--disable-setuid-sandbox',
@@ -115,5 +115,6 @@ async function main() {
 }
 
 if (require.main === module) {
+    send_log("Apostille: APP Initializing");
     main();
 }
