@@ -38,7 +38,17 @@ async function main() {
 
             await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment', { waitUntil: 'domcontentloaded' })
 
-            await page.waitForSelector('#announcement')
+            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
+
+            while (true) {
+                await page.waitForTimeout(5000)
+                if (await page.isVisible('#announcement')) {
+                    break
+                } else {
+                    await page.reload({ waitUntil: 'networkidle' })
+                    console.log('element not found, reloading');
+                }
+            }
             await page.click('button:has-text("Close")')
 
             await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
