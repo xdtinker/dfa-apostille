@@ -43,10 +43,11 @@ async function main() {
             while (true) {
                 await page.waitForTimeout(5000)
                 if (await page.isVisible('#announcement')) {
+                    console.log('Element found!');
                     break
                 } else {
                     await page.reload({ waitUntil: 'networkidle' })
-                    console.log('element not found, reloading');
+                    console.log('Element not found, reloading');
                 }
             }
             await page.click('button:has-text("Close")')
@@ -78,7 +79,7 @@ async function main() {
                     await page.locator('#Record_CountryDestination').selectOption({ 'value': 'Kuwait (KWT)' })
 
                     await page.locator('#documentsSelectionBtn').click()
-                    await page.waitForTimeout(1000);
+                    //await page.waitForTimeout(1000);
                     await page.locator('#nbiClearance').check()
                     await page.locator('#qtyNbiClearanceRegular').fill('1')
                     await page.locator('#selectDocumentsBtn').click()
@@ -98,7 +99,6 @@ async function main() {
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                         }
                     });
-
                     await page.click('#backToStepOne');
                     await page.click('#stepOneBackBtn');
                 }
