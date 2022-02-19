@@ -67,6 +67,9 @@ async function main() {
             let arr = [0, 1, 4]
             while (true) {
                 for await (const i of arr) {
+                    while (true) {
+                        if (await page.isVisible('#site')) break
+                    }
                     await page.selectOption('#site', { 'index': i })
                     await page.click('#stepSelectProcessingSiteNextBtn')
 
