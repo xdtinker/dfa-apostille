@@ -27,14 +27,14 @@ async function main() {
 
 
             while (true) {
+                await page.waitForTimeout(3000)
                 if (await page.isVisible('#announcement')) {
                     console.log('element found!');
                     break
                 } else {
-                    await page.reload({ waitUntil: 'networkidle' })
+                    await page.reload()
                     console.log('element not found, reloading');
                 }
-                await page.waitForTimeout(5000)
             }
             await page.click('div[class="container"] button:has-text("Close")')
 
