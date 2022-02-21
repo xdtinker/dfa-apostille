@@ -24,7 +24,6 @@ async function main() {
             }, 1000);
 
             await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
-            await navigationPromise
             
             while (true) {
                 await page.waitForTimeout(3000)
