@@ -58,9 +58,10 @@ async function main() {
                         if (await page.isHidden('#loading')) break
                         await page.reload({ waitUntil: 'networkidle' })
                     }
-                    await page.selectOption('select#site', { 'index': i })
-                    await page.click('#stepSelectProcessingSiteNextBtn')
-
+                    await Promise.all([
+                        page.selectOption('select#site', { 'index': i }),
+                        page.click('#stepSelectProcessingSiteNextBtn')
+                    ])
                     //Document owner   
                     await page.locator('#Record_FirstName').fill('Datu Abdulaziz')
                     await page.locator('#Record_MiddleName').fill('Matabalao')
