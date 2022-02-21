@@ -82,13 +82,13 @@ async function main() {
 
                     available_date.forEach(async dates => {
                         if (await dates.innerText() === 'Not Available') {
-                            console.log(BAD, `${await dates.innerText()} in ${branch_name}`)
+                            console.log(`${await dates.innerText()} in ${branch_name}`)
                         } else {
-                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                         }
                     });
-                    await page.waitForTimeout(1000)
+                    await page.waitForTimeout(200)
                     await page.click('#backToStepOne');
                     await page.click('#stepOneBackBtn');
                 }
