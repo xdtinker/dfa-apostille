@@ -21,24 +21,22 @@ async function main() {
 //             ignoreDefaultArgs: ['--enable-automation']
         })
         const context = await browser.newContext()
-
         const page = await context.newPage()
+        
         try {
-            var countdown = 20 * 60 * 1000;
+            var countdown = 50 * 60 * 1000;
             var timerId = setInterval(function() {
                 countdown -= 1000;
                 var min = Math.floor(countdown / (60 * 1000));
                 var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
                 if (countdown <= 0) {
                     clearInterval(timerId)
-                    send_notif(`Time limit exceeded, app will automatically restart __Apostille`)
-                    throw Error(`Time limit exceeded, app will automatically restart`)
+                    send_notif(`Checker has reached it's time limit, app will automatically restart`)
+                    throw Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
             }, 1000);
 
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment', { waitUntil: 'domcontentloaded' })
-
-            //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
+            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
 
             while (true) {
                 await page.waitForTimeout(5000)
@@ -68,7 +66,7 @@ async function main() {
             while (true) {
                 for await (const i of arr) {
                     while (true) {
-                        if (await page.isVisible('[name="Record.ProcessingSite"]') && await page.isVisible('#stepSelectProcessingSiteNextBtn')) break
+                        if (await page.isVisible('[name="Record.ProcessingSite"]')) break
                         await page.reload({ waitUntil: 'networkidle' })
                     }
                     await page.selectOption('#site', { 'index': i })
