@@ -36,9 +36,9 @@ async function main() {
                 }
             }, 1000);
 
-            //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment', { waitUntil: 'domcontentloaded' })
+            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment', { waitUntil: 'domcontentloaded' })
 
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
+            //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
 
             while (true) {
                 await page.waitForTimeout(5000)
