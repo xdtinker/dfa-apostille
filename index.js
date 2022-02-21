@@ -23,10 +23,10 @@ async function main() {
                 }
             }, 1000);
 
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+            await Promise.all([page.goto('https://co.dfaapostille.ph/appointment/Account/Login')])
             
             while (true) {
-                await page.waitForTimeout(3000)
+                //await page.waitForTimeout(3000)
                 if (await page.isVisible('#announcement')) {
                     console.log('element found!');
                     break
