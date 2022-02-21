@@ -68,7 +68,7 @@ async function main() {
             while (true) {
                 for await (const i of arr) {
                     while (true) {
-                        if (await page.isVisible('[name="Record.ProcessingSite"]')) break
+                        if (await page.isVisible('[name="Record.ProcessingSite"]') && await page.isVisible('#stepSelectProcessingSiteNextBtn')) break
                         await page.reload({ waitUntil: 'networkidle' })
                     }
                     await page.selectOption('#site', { 'index': i })
