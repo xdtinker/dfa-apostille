@@ -58,7 +58,7 @@ async function main() {
                         if (await page.isHidden('#loading')) break
                         await page.reload({ waitUntil: 'networkidle' })
                     }
-                    await page.selectOption('#site', { 'index': i })
+                    await page.selectOption('select#site', { 'index': i })
                     await page.click('#stepSelectProcessingSiteNextBtn')
 
                     //Document owner   
