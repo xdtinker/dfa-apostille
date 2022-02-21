@@ -22,17 +22,19 @@ async function main() {
                     throw Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
             }, 1000);
-
-            await Promise.all([page.goto('https://co.dfaapostille.ph/appointment/Account/Login')])
             
             while (true) {
-                //await page.waitForTimeout(3000)
+                //await page.waitForTimeout(5000)
+                //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+
                 if (await page.isVisible('#announcement')) {
                     console.log('element found!');
                     break
                 } else {
-                    await page.reload()
+                    // await page.reload({ waitUntil: 'networkidle' })
                     console.log('element not found, reloading');
+                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+
                 }
             }
             await page.click('div[class="container"] button:has-text("Close")')
