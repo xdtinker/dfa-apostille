@@ -25,16 +25,14 @@ async function main() {
             
             while (true) {
                 //await page.waitForTimeout(5000)
-                //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+                await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
 
                 if (await page.isVisible('#announcement')) {
                     console.log('element found!');
                     break
                 } else {
-                    // await page.reload({ waitUntil: 'networkidle' })
+                    await page.reload();
                     console.log('element not found, reloading');
-                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
-
                 }
             }
             await page.click('div[class="container"] button:has-text("Close")')
