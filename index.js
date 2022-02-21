@@ -1,24 +1,24 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
-const args = [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-infobars',
-    '--window-position=0,0',
-    '--ignore-certifcate-errors',
-    '--ignore-certifcate-errors-spki-list',
-    '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'
-];
+// const args = [
+//     '--no-sandbox',
+//     '--disable-setuid-sandbox',
+//     '--disable-infobars',
+//     '--window-position=0,0',
+//     '--ignore-certifcate-errors',
+//     '--ignore-certifcate-errors-spki-list',
+//     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'
+// ];
 
 async function main() {
     console.log('App is running!');
     (async() => {
         const browser = await firefox.launch({
-            headless: true,
-            ignoreHTTPSErrors: true,
-            args: args,
-            ignoreDefaultArgs: ['--enable-automation']
+            headless: true
+//             ignoreHTTPSErrors: true,
+//             args: args,
+//             ignoreDefaultArgs: ['--enable-automation']
         })
         const context = await browser.newContext()
 
