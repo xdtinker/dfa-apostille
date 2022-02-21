@@ -5,7 +5,7 @@ async function main() {
     console.log('App is running');
     (async() => {
         const browser = await firefox.launch({
-            headless: false
+            headless: true
         })
         const context = await browser.newContext()
 
