@@ -1,30 +1,17 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 
-// const args = [
-//     '--no-sandbox',
-//     '--disable-setuid-sandbox',
-//     '--disable-infobars',
-//     '--window-position=0,0',
-//     '--ignore-certifcate-errors',
-//     '--ignore-certifcate-errors-spki-list',
-//     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'
-// ];
-
 async function main() {
-    console.log('App is running!');
+    console.log('App is running');
     (async() => {
         const browser = await firefox.launch({
-            headless: true
-//             ignoreHTTPSErrors: true,
-//             args: args,
-//             ignoreDefaultArgs: ['--enable-automation']
+            headless: false
         })
         const context = await browser.newContext()
+
         const page = await context.newPage()
-        
         try {
-            var countdown = 50 * 60 * 1000;
+            var countdown = 20 * 60 * 1000;
             var timerId = setInterval(function() {
                 countdown -= 1000;
                 var min = Math.floor(countdown / (60 * 1000));
@@ -38,17 +25,18 @@ async function main() {
 
             await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
 
+
             while (true) {
-                await page.waitForTimeout(5000)
                 if (await page.isVisible('#announcement')) {
-                    console.log('Element found!');
+                    console.log('element found!');
                     break
                 } else {
                     await page.reload({ waitUntil: 'networkidle' })
-                    console.log('Element not found, reloading');
+                    console.log('element not found, reloading');
                 }
+                await page.waitForTimeout(5000)
             }
-            await page.click('button:has-text("Close")')
+            await page.click('div[class="container"] button:has-text("Close")')
 
             await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
             await page.locator('#Password').fill('Anon123s.')
@@ -59,14 +47,16 @@ async function main() {
 
             //Home page
             await page.waitForTimeout(1000)
-            await page.click('text=DOCUMENT OWNER')
+            await page.click('#show-document-owner')
+
 
             await page.waitForTimeout(1000);
+            isTrue = true
             let arr = [0, 1, 4]
-            while (true) {
+            while (isTrue) {
                 for await (const i of arr) {
                     while (true) {
-                        if (await page.isVisible('[name="Record.ProcessingSite"]')) break
+                        if (await page.isVisible('[name="Record.ProcessingSite"]') && await page.isVisible('#stepSelectProcessingSiteNextBtn')) break
                         await page.reload({ waitUntil: 'networkidle' })
                     }
                     await page.selectOption('#site', { 'index': i })
@@ -92,12 +82,13 @@ async function main() {
 
                     available_date.forEach(async dates => {
                         if (await dates.innerText() === 'Not Available') {
-                            console.log(`${await dates.innerText()} in ${branch_name}`)
+                            console.log(BAD, `${await dates.innerText()} in ${branch_name}`)
                         } else {
-                            console.log(`APPOINTMENT FOUND IN ${branch_name}`)
+                            console.log(OK, `APPOINTMENT FOUND IN ${branch_name}`)
                             send_notif(`APPOINTMENT FOUND IN ${branch_name}`)
                         }
                     });
+                    await page.waitForTimeout(1000)
                     await page.click('#backToStepOne');
                     await page.click('#stepOneBackBtn');
                 }
