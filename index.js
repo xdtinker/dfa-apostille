@@ -36,7 +36,7 @@ async function main() {
                 }
             }, 1000);
 
-            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment', { waitUntil: 'domcontentloaded' })
+            //await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment', { waitUntil: 'domcontentloaded' })
 
             await page.goto('https://co.dfaapostille.ph/appointment/Account/Login', { waitUntil: 'domcontentloaded' });
 
@@ -68,7 +68,8 @@ async function main() {
             while (true) {
                 for await (const i of arr) {
                     while (true) {
-                        if (await page.isVisible('#site')) break
+                        if (await page.isVisible('[name="Record.ProcessingSite"]')) break
+                        await page.reload({ waitUntil: 'networkidle' })
                     }
                     await page.selectOption('#site', { 'index': i })
                     await page.click('#stepSelectProcessingSiteNextBtn')
@@ -90,10 +91,6 @@ async function main() {
                     await page.locator('#selectDocumentsBtn').click()
 
                     await page.locator('#stepOneNextBtn').click()
-
-                    while (true) {
-                        if (await page.isVisible('#siteAndNameAddress')) break
-                    }
 
                     const available_date = await page.$$('span[class="fc-title"]');
                     var branch_name = await page.$eval("#siteAndNameAddress", branchname => branchname.textContent);
