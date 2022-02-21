@@ -83,9 +83,6 @@ async function main() {
                     await page.locator('#Record_CountryDestination').selectOption({ 'value': 'Kuwait (KWT)' })
 
                     await page.locator('#documentsSelectionBtn').click()
-                    while (true) {
-                        if (await page.isVisible('#nbiClearance')) break
-                    }
                     await page.locator('#nbiClearance').check()
                     await page.locator('#qtyNbiClearanceRegular').fill('1')
                     await page.locator('#selectDocumentsBtn').click()
