@@ -35,7 +35,7 @@ async function main() {
                         break
                     } else {
                         console.log('element not found, reloading');
-                        await page.reload({ waitUntil: 'domcontentloaded' })
+                       await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
                     }
                 } else {
                     send_notif('ERROR 403 Forbidden, reloading');
@@ -74,7 +74,7 @@ async function main() {
                             }
                         } catch (e) {
                             console.log('Element missing, Reloading');
-                            await page.reload();
+                            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
                         }
                     }
                     //Document owner   
