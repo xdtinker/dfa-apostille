@@ -64,6 +64,7 @@ async function main() {
                 for await (const i of arr) {
                     while (true) {
                         try {
+                            console.log('check if element is visible);
                             if (await page.isHidden('#loading') && await page.isVisible('[name="Record.ProcessingSite"]')) {
                                 await page.selectOption('#site', { 'index': i })
                                 await page.click('#stepSelectProcessingSiteNextBtn')
