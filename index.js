@@ -26,20 +26,23 @@ async function main() {
             }, 1000);
             
             while (true) {
-                let response = await fetch('https://co.dfaapostille.ph/appointment/Account/Login');
-                console.log(response.status);
-                if (response.status == 200) {
-                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
-                    if (await page.isVisible('#announcement')) {
-                        console.log('element found!');
-                        break
+                try {
+                    let response = await fetch('https://co.dfaapostille.ph/appointment/Account/Login');
+                    console.log(response.status);
+                    if (response.status == 200) {
+                        await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+                        if (await page.isVisible('#announcement')) {
+                            console.log('element found!');
+                            break
+                        } else {
+                            console.log('element not found, reloading');
+                        }
                     } else {
-                        console.log('element not found, reloading');
-                       await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+                        console.log('ERROR 403 Forbidden, reloading');
+                        await page.reload();
                     }
-                } else {
-                    send_notif('ERROR 403 Forbidden, reloading');
-                    await page.reload({ waitUntil: 'domcontentloaded' })
+                } catch (e) {
+                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
                 }
             }
             
