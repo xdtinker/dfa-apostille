@@ -71,7 +71,7 @@ async function main() {
                             }
                         } catch (e) {
                             console.log('Element missing, Reloading');
-                            await page.reload({ waitUntil: 'networkidle' })
+                            await page.reload();
                         }
                     }
                     //Document owner   
