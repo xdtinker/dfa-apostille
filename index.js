@@ -1,5 +1,6 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
+const { fetch } = require('cross-fetch');
 
 async function main() {
     console.log('App is running');
@@ -18,6 +19,7 @@ async function main() {
                 var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
                 if (countdown <= 0) {
                     clearInterval(timerId)
+                    await page.click('.float-right')
                     //send_notif(`Checker has reached it's time limit, app will automatically restart`)
                     throw Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
