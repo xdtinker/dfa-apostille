@@ -24,17 +24,23 @@ async function main() {
             }, 1000);
             
             while (true) {
-                //await page.waitForTimeout(5000)
-                await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
-
-                if (await page.isVisible('#announcement')) {
-                    console.log('element found!');
-                    break
+                let response = await fetch('https://co.dfaapostille.ph/appointment/Account/Login');
+                console.log(response.status);
+                if (response.status == 200) {
+                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+                    if (await page.isVisible('#announcement')) {
+                        console.log('element found!');
+                        break
+                    } else {
+                        console.log('element not found, reloading');
+                        await page.reload({ waitUntil: 'domcontentloaded' })
+                    }
                 } else {
-                    await page.reload();
-                    console.log('element not found, reloading');
+                    send_notif('ERROR 403 Forbidden, reloading');
+                    await page.reload({ waitUntil: 'domcontentloaded' })
                 }
             }
+            
             await page.click('div[class="container"] button:has-text("Close")')
 
             await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
