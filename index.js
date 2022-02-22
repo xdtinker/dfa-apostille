@@ -63,13 +63,17 @@ async function main() {
             while (isTrue) {
                 for await (const i of arr) {
                     while (true) {
-                        if (await page.isHidden('#loading') && await page.isVisible('#site')) break
-                        await page.reload({ waitUntil: 'networkidle' })
+                        try {
+                            if (await page.isHidden('#loading') && await page.isVisible('[name="Record.ProcessingSite"]')) {
+                                await page.selectOption('#site', { 'index': i })
+                                await page.click('#stepSelectProcessingSiteNextBtn')
+                                break
+                            }
+                        } catch (e) {
+                            console.log('Element missing, Reloading');
+                            await page.reload({ waitUntil: 'networkidle' })
+                        }
                     }
-                    await Promise.all([
-                        page.selectOption('select#site', { 'index': i }),
-                        page.click('#stepSelectProcessingSiteNextBtn')
-                    ])
                     //Document owner   
                     await page.locator('#Record_FirstName').fill('Datu Abdulaziz')
                     await page.locator('#Record_MiddleName').fill('Matabalao')
