@@ -30,7 +30,7 @@ async function main() {
                     let response = await fetch('https://co.dfaapostille.ph/appointment/Account/Login');
                     console.log(response.status);
                     if (response.status == 200) {
-                        await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+                        await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
                         if (await page.isVisible('#announcement')) {
                             console.log('element found!');
                             break
@@ -42,7 +42,7 @@ async function main() {
                         await page.reload();
                     }
                 } catch (e) {
-                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
                 }
             }
             
