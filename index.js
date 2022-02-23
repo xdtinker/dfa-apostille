@@ -39,7 +39,7 @@ async function main() {
                         }
                     } else {
                         console.log('ERROR 403 Forbidden, reloading');
-                        await page.reload();
+                        await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
                     }
                 } catch (e) {
                     await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
