@@ -86,6 +86,9 @@ async function main() {
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
+                            } else {
+                                console.log('reloading');
+                                await page.reload()
                             }
                         } catch (e) {
                             console.log('Element missing, Reloading');
