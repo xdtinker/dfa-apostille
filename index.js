@@ -44,7 +44,7 @@ async function main() {
                     if (response.status == 200) {
                         await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
                         if (await page.isVisible('#announcement')) {
-                            console.log('element found!');
+                            console.log('PART 1: Element found!');
                             break
                         } else {
                             console.log('element not found, reloading');
@@ -81,7 +81,7 @@ async function main() {
                     while (true) {
                         try {
                             if (await page.isHidden('#loading')) {
-                                console.log('Element Found!');
+                                console.log('PART 2: Element Found!');
                                 await page.selectOption('#site', { 'index': i })
                                 console.log(`index ${i} selected`);
                                 await page.click('#stepSelectProcessingSiteNextBtn')
@@ -93,7 +93,8 @@ async function main() {
                             }
                         } catch (e) {
                             console.log('catch: Element missing, Reloading');
-                            await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
+                            await page.reload()
+                            //await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                         }
                     }
                     //Document owner   
