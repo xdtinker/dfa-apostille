@@ -80,17 +80,19 @@ async function main() {
                 for await (const i of arr) {
                     while (true) {
                         try {
-                            console.log('check if element is visible');
+                            console.log('Is Element visible?');
                             const loading = await page.$("#loading");
                             if (loading) {
-                                console.log('element is missing, reloading');
-                                await page.reload()
-                            } else {
+                                console.log('TRUE');
                                 await page.selectOption('#site', { 'index': i })
                                 console.log('index selected');
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
+
+                            } else {
+                                console.log('element is missing, reloading');
+                                await page.reload()
                             }
                         } catch (e) {
                             console.log('Element missing, Reloading');
