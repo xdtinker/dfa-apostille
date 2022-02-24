@@ -83,7 +83,8 @@ async function main() {
                             if (await page.isHidden('#loading')) {
                                 console.log('PART 2: Element Found!');
                                 await page.selectOption('#site', { 'index': i })
-                                console.log(`index ${i} selected`);
+                                var branch_name = await page.$eval('#site', sel => sel.options[sel.options.selectedIndex].textContent)
+                                console.log(`Check appointment status in ${branch_name}\n`);
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
