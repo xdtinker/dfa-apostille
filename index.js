@@ -40,7 +40,7 @@ async function main() {
             while (true) {
                 try {
                     let response = await fetch('https://co.dfaapostille.ph/appointment/Account/Login');
-                    console.log(response.status);
+                    console.log('Page response:', response.status);
                     if (response.status == 200) {
                         await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
                         if (await page.isVisible('#announcement')) {
@@ -80,7 +80,7 @@ async function main() {
                 for await (const i of arr) {
                     while (true) {
                         try {
-                            if (await page.locator('#loading').isHidden()) {
+                            if (await page.isHidden('#loading')) {
                                 console.log('Element Found!');
                                 await page.selectOption('#site', { 'index': i })
                                 console.log(`index ${i} selected`);
