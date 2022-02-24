@@ -89,11 +89,11 @@ async function main() {
                                 break
                             } else {
                                 console.log('reloading');
-                                await page.reload()
+                                await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                             }
                         } catch (e) {
                             console.log('Element missing, Reloading');
-                            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login');
+                            await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                         }
                     }
                     //Document owner   
