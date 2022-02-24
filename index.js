@@ -81,14 +81,15 @@ async function main() {
                     while (true) {
                         try {
                             console.log('check if element is visible');
-                            if (await page.isHidden('#loading') && await page.isVisible('[name="Record.ProcessingSite"]')) {
+                            const loading = await page.$("#loading");
+                            if (loading) {
                                 await page.selectOption('#site', { 'index': i })
                                 console.log('index selected');
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
                             } else {
-                                console.log('reloading');
+                                console.log('element is missing, reloading');
                                 await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                             }
                         } catch (e) {
