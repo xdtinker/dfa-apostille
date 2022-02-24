@@ -48,6 +48,7 @@ async function main() {
                             break
                         } else {
                             console.log('element not found, reloading');
+                            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
                         }
                     } else {
                         console.log('ERROR 403 Forbidden, reloading');
