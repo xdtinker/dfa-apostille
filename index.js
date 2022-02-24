@@ -83,14 +83,14 @@ async function main() {
                             console.log('check if element is visible');
                             const loading = await page.$("#loading");
                             if (loading) {
+                                console.log('element is missing, reloading');
+                                await page.reload()
+                            } else {
                                 await page.selectOption('#site', { 'index': i })
                                 console.log('index selected');
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
-                            } else {
-                                console.log('element is missing, reloading');
-                                await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                             }
                         } catch (e) {
                             console.log('Element missing, Reloading');
