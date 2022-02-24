@@ -80,22 +80,19 @@ async function main() {
                 for await (const i of arr) {
                     while (true) {
                         try {
-                            console.log('Is Element visible?');
-                            const loading = await page.$("#loading");
-                            if (loading) {
-                                console.log('TRUE');
+                            if (await page.locator('#loading').isHidden()) {
+                                console.log('Element Found!');
                                 await page.selectOption('#site', { 'index': i })
-                                console.log('index selected');
+                                console.log(`index ${i} selected`);
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
-
                             } else {
                                 console.log('element is missing, reloading');
                                 await page.reload()
                             }
                         } catch (e) {
-                            console.log('Element missing, Reloading');
+                            console.log('catch: Element missing, Reloading');
                             await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                         }
                     }
