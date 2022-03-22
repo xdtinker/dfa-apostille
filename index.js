@@ -125,8 +125,9 @@ async function main() {
                         }
                     });
                     await page.waitForTimeout(200)
-                    await page.click('#backToStepOne');
-                    await page.click('#stepOneBackBtn');
+//                     await page.click('#backToStepOne');
+//                     await page.click('#stepOneBackBtn');
+                    await page.reload()
                 }
             }
         } catch (e) {
