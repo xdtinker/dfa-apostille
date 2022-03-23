@@ -24,19 +24,6 @@ async function main() {
 
         const page = await context.newPage()
         try {
-            var countdown = 20 * 60 * 1000;
-            var timerId = setInterval(async function() {
-                countdown -= 1000;
-                var min = Math.floor(countdown / (60 * 1000));
-                var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
-                if (countdown <= 0) {
-                    clearInterval(timerId)
-                    await page.click('.float-right')
-                    //send_notif(`Checker has reached it's time limit, app will automatically restart`)
-                    throw Error(`Checker has reached it's time limit, app will automatically restart`)
-                }
-            }, 1000);
-            
             while (true) {
                 try {
                     let response = await fetch('https://co.dfaapostille.ph/appointment/Account/Login');
@@ -76,6 +63,20 @@ async function main() {
             await page.waitForTimeout(1000);
             isTrue = true
             let arr = [0, 1, 4]
+            
+            var countdown = 20 * 60 * 1000;
+            var timerId = setInterval(async function() {
+                countdown -= 1000;
+                var min = Math.floor(countdown / (60 * 1000));
+                var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
+                if (countdown <= 0) {
+                    clearInterval(timerId)
+                    await page.click('.float-right')
+                    //send_notif(`Checker has reached it's time limit, app will automatically restart`)
+                    throw Error(`Checker has reached it's time limit, app will automatically restart`)
+                }
+            }, 1000);
+            
             while (isTrue) {
                 for await (const i of arr) {
                     while (true) {
