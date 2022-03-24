@@ -45,7 +45,7 @@ async function main() {
                     await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
                 }
             }
-            
+
             await page.click('div[class="container"] button:has-text("Close")')
 
             await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
@@ -63,7 +63,7 @@ async function main() {
             await page.waitForTimeout(1000);
             isTrue = true
             let arr = [0, 1, 4]
-            
+
             var countdown = 20 * 60 * 1000;
             var timerId = setInterval(async function() {
                 countdown -= 1000;
@@ -72,11 +72,11 @@ async function main() {
                 if (countdown <= 0) {
                     clearInterval(timerId)
                     await page.click('.float-right')
-                    //send_notif(`Checker has reached it's time limit, app will automatically restart`)
+                        //send_notif(`Checker has reached it's time limit, app will automatically restart`)
                     throw Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
             }, 1000);
-            
+
             while (isTrue) {
                 for await (const i of arr) {
                     while (true) {
@@ -84,8 +84,8 @@ async function main() {
                             if (await page.isHidden('#loading')) {
                                 console.log('PART 2: Element Found!');
                                 await page.selectOption('#site', { 'index': i })
-//                                 var branch_name = await page.$eval('#site', sel => sel.options[sel.options.selectedIndex].textContent)
-//                                 console.log(`Check appointment status in ${branch_name}\n`);
+                                    //                                 var branch_name = await page.$eval('#site', sel => sel.options[sel.options.selectedIndex].textContent)
+                                    //                                 console.log(`Check appointment status in ${branch_name}\n`);
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
@@ -93,13 +93,11 @@ async function main() {
                                 console.log('element is missing, reloading');
                                 await page.reload()
                             }
-                        } catch (e) {
-                            if (error instanceof playwright.errors.TimeoutError){
+                        } catch (error) {
+                            if (error instanceof playwright.errors.TimeoutError) {
                                 console.log('catch: Element missing, Reloading')
                                 await page.reload()
-                                }
                             }
-                            //await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                         }
                     }
                     //Document owner   
