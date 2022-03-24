@@ -137,7 +137,7 @@ async function main() {
         } finally {
             await context.close()
             await browser.close()
-            process.exit(0)
+            process.exit(1)
         }
     })()
 }
