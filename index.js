@@ -94,10 +94,8 @@ async function main() {
                                 await page.reload()
                             }
                         } catch (error) {
-                            if (error instanceof playwright.errors.TimeoutError) {
                                 console.log('catch: Element missing, Reloading')
                                 await page.reload()
-                            }
                         }
                     }
                     //Document owner   
