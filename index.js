@@ -94,8 +94,11 @@ async function main() {
                                 await page.reload()
                             }
                         } catch (e) {
-                            console.log('catch: Element missing, Reloading');
-                            await page.reload()
+                            if (error instanceof playwright.errors.TimeoutError)
+                                console.log('catch: Element missing, Reloading')
+                                await page.reload()
+  }
+                            
                             //await page.goto('https://co.dfaapostille.ph/appointment/Home/Index')
                         }
                     }
