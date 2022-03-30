@@ -1,6 +1,7 @@
 const { firefox } = require('playwright-firefox');
 const { send_log, send_notif } = require('./telegram.js');
 const { fetch } = require('cross-fetch');
+require('dotenv').config();
 
 const args = [
     '--no-sandbox',
@@ -9,8 +10,12 @@ const args = [
     '--window-position=0,0',
     '--ignore-certifcate-errors',
     '--ignore-certifcate-errors-spki-list',
-    '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'
+    '--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36"'
 ];
+
+const base_url = process.env.URL
+const email = process.env.EMAIL
+const passwd = process.env.PASSWD
 
 async function main() {
     console.log('App is running');
@@ -26,30 +31,30 @@ async function main() {
         try {
             while (true) {
                 try {
-                    let response = await fetch('https://co.dfaapostille.ph/appointment/Account/Login');
+                    let response = await fetch(base_url);
                     console.log('Page response:', response.status);
                     if (response.status == 200) {
-                        await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
+                        await page.goto(base_url);
                         if (await page.isVisible('#announcement')) {
                             console.log('PART 1: Element found!');
                             break
                         } else {
                             console.log('element not found, reloading');
-                            await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
+                            await page.goto(base_url);
                         }
                     } else {
                         console.log('ERROR 403 Forbidden, reloading');
-                        await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
+                        await page.goto(base_url);
                     }
                 } catch (e) {
-                    await page.goto('https://co.dfaapostille.ph/appointment/Account/Login?ReturnUrl=%2Fappointment');
+                    await page.goto(base_url);
                 }
             }
 
             await page.click('div[class="container"] button:has-text("Close")')
 
-            await page.locator('#Email').fill('aziz.saricula+1@gmail.com')
-            await page.locator('#Password').fill('Anon123s.')
+            await page.locator('#Email').fill(email)
+            await page.locator('#Password').fill(passwd)
 
             await page.click('button:has-text("LOGIN")')
             await page.click('#declaration-agree')
@@ -94,8 +99,8 @@ async function main() {
                                 await page.reload()
                             }
                         } catch (error) {
-                                console.log('catch: Element missing, Reloading')
-                                await page.reload()
+                            console.log('catch: Element missing, Reloading')
+                            await page.reload()
                         }
                     }
                     //Document owner   
