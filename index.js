@@ -92,11 +92,12 @@ async function main() {
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('Success!');
                                 break
+                            } else {
+                                await page.goBack()
+                                await page.goto(branch_url)
                             }
                         } catch (e) {
                             console.error('Failed, Retrying')
-                            await page.goBack()
-                            await page.goto(branch_url)
                         }
                     }
                     //Document owner   
