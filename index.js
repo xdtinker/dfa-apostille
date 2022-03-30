@@ -100,7 +100,8 @@ async function main() {
                             }
                         } catch (error) {
                             console.log('catch: Element missing, Reloading')
-                            await page.reload()
+                            await page.goBack()
+                            await page.click('#show-document-owner')
                         }
                     }
                     //Document owner   
