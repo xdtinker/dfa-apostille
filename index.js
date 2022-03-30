@@ -19,7 +19,6 @@ const passwd = process.env.PASSWD
 const logout = process.env.LOGOUT
 
 async function main() {
-    console.log('App is running');
     (async() => {
         const browser = await firefox.launch({
             headless: true,
@@ -32,6 +31,7 @@ async function main() {
         try {
             while (true) {
                 try {
+                    console.log('Testing for page response');
                     let response = await fetch(base_url);
                     console.log('Page response:', response.status);
                     if (response.status >= 400) {
@@ -47,7 +47,7 @@ async function main() {
                         }
                     }
                 } catch (e) {
-                    console.error(e)
+                    console.log(e)
                 }
             }
 
@@ -93,7 +93,7 @@ async function main() {
                                 break
                             }
                         } catch (error) {
-                            console.error('Failed, Retrying')
+                            console.log('Failed, Retrying')
                             await page.goBack()
                             await page.click('#show-document-owner')
                         }
