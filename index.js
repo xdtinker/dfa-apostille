@@ -39,14 +39,12 @@ async function main() {
                         if (await page.isVisible('#announcement')) {
                             console.log('#announcement found!');
                             break
-                        } else {
-                            console.log('#announcement not found, reloading');
-                            await page.goto(base_url);
                         }
                     } else {
                         console.log(`Page response: ${response}`);
                     }
                 } catch (e) {
+                    console.log('#announcement not found, reloading');
                     await page.goto(base_url);
                 }
             }
