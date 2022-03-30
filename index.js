@@ -34,18 +34,20 @@ async function main() {
                 try {
                     let response = await fetch(base_url);
                     console.log('Page response:', response.status);
-                    if (response.status == 200) {
+                    if (response.status >= 400) {
+                        throw Error('Bad response from server');
+                    } else {
                         await page.goto(base_url);
                         if (await page.isVisible('#announcement')) {
                             console.log('#announcement found!');
                             break
+                        } else {
+                            console.error('#announcement not found, reloading');
+                            await page.goto(base_url);
                         }
-                    } else {
-                        console.log(`Page response: ${response}`);
                     }
                 } catch (e) {
-                    console.log('#announcement not found, reloading');
-                    await page.goto(base_url);
+                    console.error(e)
                 }
             }
 
@@ -91,7 +93,7 @@ async function main() {
                                 break
                             }
                         } catch (error) {
-                            console.log('Failed, Retrying')
+                            console.error('Failed, Retrying')
                             await page.goBack()
                             await page.click('#show-document-owner')
                         }
