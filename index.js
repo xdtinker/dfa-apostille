@@ -47,8 +47,7 @@ async function main() {
                         }
                     }
                 } catch (e) {
-                    if (e.code)
-                        console.log(e)
+                    console.log(e)
                 }
             }
 
