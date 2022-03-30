@@ -35,7 +35,7 @@ async function main() {
                     let response = await fetch(base_url);
                     console.log('Page response:', response.status);
                     if (response.status >= 400) {
-                        throw Error('Bad response from server');
+                        console.log('Bad response from server');
                     } else {
                         await page.goto(base_url);
                         if (await page.isVisible('#announcement')) {
@@ -47,7 +47,8 @@ async function main() {
                         }
                     }
                 } catch (e) {
-                    console.log(e)
+                    if (e.code)
+                        console.log(e)
                 }
             }
 
