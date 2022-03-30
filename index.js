@@ -37,15 +37,14 @@ async function main() {
                     if (response.status == 200) {
                         await page.goto(base_url);
                         if (await page.isVisible('#announcement')) {
-                            console.log('PART 1: Element found!');
+                            console.log('#announcement found!');
                             break
                         } else {
-                            console.log('element not found, reloading');
+                            console.log('#announcement not found, reloading');
                             await page.goto(base_url);
                         }
                     } else {
-                        console.log('ERROR 403 Forbidden, reloading');
-                        await page.goto(base_url);
+                        console.log(`Page response: ${response}`);
                     }
                 } catch (e) {
                     await page.goto(base_url);
@@ -88,14 +87,13 @@ async function main() {
                     while (true) {
                         try {
                             if (await page.isHidden('#loading')) {
-                                console.log('PART 2: Element Found!');
                                 await page.selectOption('#site', { 'index': i })
                                 await page.click('#stepSelectProcessingSiteNextBtn')
-                                console.log('proceeding to next step');
+                                console.log('Success!');
                                 break
                             }
                         } catch (error) {
-                            console.log('Element missing, Retrying')
+                            console.log('Failed, Retrying')
                             await page.goBack()
                             await page.click('#show-document-owner')
                         }
