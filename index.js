@@ -36,7 +36,7 @@ async function main() {
                     let response = await fetch(base_url);
                     console.log('Page response:', response.status);
                     if (response.status >= 400) {
-                        throw Error('Bad response from server');
+                        throw new Error('Bad response from server');
                     } else {
                         await page.goto(base_url);
                         if (await page.isVisible('#announcement')) {
@@ -79,7 +79,7 @@ async function main() {
                     clearInterval(timerId)
                     await page.goto(logout)
                         //send_notif(`Checker has reached it's time limit, app will automatically restart`)
-                    throw Error(`Checker has reached it's time limit, app will automatically restart`)
+                    throw new Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
             }, 1000);
 
@@ -89,8 +89,9 @@ async function main() {
                         try {
                             if (await page.isHidden('#loading')) {
                                 await page.selectOption('#site', { 'index': i })
+                                var branch_name = await page.$eval('#site', sel => sel.options[sel.options.selectedIndex].textContent)
                                 await page.click('#stepSelectProcessingSiteNextBtn')
-                                console.log('Success!');
+                                console.log(`---------${branch_name}---------`);
                                 break
                             } else {
                                 await page.goBack()
