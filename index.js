@@ -17,6 +17,7 @@ const base_url = process.env.URL
 const email = process.env.EMAIL
 const passwd = process.env.PASSWD
 const logout = process.env.LOGOUT
+const branch_url = process.env.BRANCH
 
 async function main() {
     (async() => {
@@ -95,7 +96,7 @@ async function main() {
                         } catch (e) {
                             console.error('Failed, Retrying')
                             await page.goBack()
-                            await page.click('#show-document-owner')
+                            await page.goto(branch_url)
                         }
                     }
                     //Document owner   
