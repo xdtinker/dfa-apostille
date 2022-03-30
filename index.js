@@ -47,7 +47,7 @@ async function main() {
                         }
                     }
                 } catch (e) {
-                    console.Error(e)
+                    console.error(e)
                 }
             }
 
