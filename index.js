@@ -16,6 +16,7 @@ const args = [
 const base_url = process.env.URL
 const email = process.env.EMAIL
 const passwd = process.env.PASSWD
+const logout = process.env.LOGOUT
 
 async function main() {
     console.log('App is running');
@@ -76,7 +77,7 @@ async function main() {
                 var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
                 if (countdown <= 0) {
                     clearInterval(timerId)
-                    await page.click('.float-right')
+                    await page.goto(logout)
                         //send_notif(`Checker has reached it's time limit, app will automatically restart`)
                     throw Error(`Checker has reached it's time limit, app will automatically restart`)
                 }
@@ -89,17 +90,12 @@ async function main() {
                             if (await page.isHidden('#loading')) {
                                 console.log('PART 2: Element Found!');
                                 await page.selectOption('#site', { 'index': i })
-                                    //                                 var branch_name = await page.$eval('#site', sel => sel.options[sel.options.selectedIndex].textContent)
-                                    //                                 console.log(`Check appointment status in ${branch_name}\n`);
                                 await page.click('#stepSelectProcessingSiteNextBtn')
                                 console.log('proceeding to next step');
                                 break
-                            } else {
-                                console.log('element is missing, reloading');
-                                await page.reload()
                             }
                         } catch (error) {
-                            console.log('catch: Element missing, Reloading')
+                            console.log('Element missing, Retrying')
                             await page.goBack()
                             await page.click('#show-document-owner')
                         }
