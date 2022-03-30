@@ -35,19 +35,19 @@ async function main() {
                     let response = await fetch(base_url);
                     console.log('Page response:', response.status);
                     if (response.status >= 400) {
-                        console.log('Bad response from server');
+                        throw Error('Bad response from server');
                     } else {
                         await page.goto(base_url);
                         if (await page.isVisible('#announcement')) {
                             console.log('#announcement found!');
                             break
                         } else {
-                            console.error('#announcement not found, reloading');
+                            console.log('#announcement not found, reloading');
                             await page.goto(base_url);
                         }
                     }
                 } catch (e) {
-                    console.log(e)
+                    console.Error(e)
                 }
             }
 
@@ -92,8 +92,8 @@ async function main() {
                                 console.log('Success!');
                                 break
                             }
-                        } catch (error) {
-                            console.log('Failed, Retrying')
+                        } catch (e) {
+                            console.error('Failed, Retrying')
                             await page.goBack()
                             await page.click('#show-document-owner')
                         }
@@ -131,7 +131,7 @@ async function main() {
                 }
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
             send_notif(e)
         } finally {
             await context.close()
