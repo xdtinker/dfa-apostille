@@ -120,7 +120,7 @@ async function main() {
                     var branch_name = await page.$eval("#siteAndNameAddress", branchname => branchname.textContent);
 
                     available_date.forEach(async dates => {
-                        if ((await dates.innerText()).includes('Not testAvailable')) {
+                        if ((await dates.innerText()).includes('Not Available')) {
                             console.log(`${await dates.innerText()} in ${branch_name}`)
                         } else {
                             console.log(`APPOINTMENT FOUND IN ${branch_name}`)
