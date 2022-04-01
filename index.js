@@ -83,6 +83,7 @@ async function main() {
                 }
             }, 1000);
 
+            var manual_restart = 0
             while (isTrue) {
                 for await (const i of arr) {
                     while (true) {
@@ -99,6 +100,11 @@ async function main() {
                             }
                         } catch (e) {
                             console.error('Failed, Retrying')
+                            manual_restart += 1
+                            if (manual_restart > 6) {
+                                send_notif('checker restart override')
+                                process.exit(0)
+                            }
                         }
                     }
                     //Document owner   
