@@ -90,9 +90,9 @@ async function main() {
                         try {
                             if (await page.isHidden('#loading')) {
                                 await page.selectOption('#site', { 'index': i })
-                                //var branch_name = await page.$eval('#site', sel => sel.options[sel.options.selectedIndex].textContent)
+                                var branch_name = await page.$eval('#site', sel => sel.options[sel.options.selectedIndex].textContent)
                                 await page.click('#stepSelectProcessingSiteNextBtn')
-                                console.log(`\n-------------------------------------------------\n`);
+                                console.log(`---------${branch_name}---------`);
                                 break
                             } else {
                                 await page.goBack()
@@ -102,7 +102,7 @@ async function main() {
                             console.error('Failed, Retrying')
                             manual_restart += 1
                             if (manual_restart >= 5) {
-                                send_notif('Max retries reached.')
+                                //send_notif('Max retries reached.')
                                 throw new Error(`Max retries reached.`)
                             }
                         }
